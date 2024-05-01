@@ -261,6 +261,16 @@
 
   // src/scroll.js
   var lenisDefault = (t2) => Math.min(1, 1.001 - Math.pow(2, -10 * t2));
+  function handleEditor(onEditorView = null) {
+    if (Webflow.env("editor") !== void 0) {
+      if (onEditorView !== null)
+        onEditorView();
+      console.log("Webflow Editor View");
+      return true;
+    } else {
+      return false;
+    }
+  }
   var Scroll = class extends Lenis {
     constructor() {
       super({
@@ -287,6 +297,7 @@
         this.speed = velocity || 0;
         this.percent = progress || 0;
         this.callbackRaf();
+        handleEditor(this.destroy.bind(this));
       });
     }
     to(target) {

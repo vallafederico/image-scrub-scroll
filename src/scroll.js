@@ -11,6 +11,17 @@ const lenisDefault = (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t));
 
 */
 
+function handleEditor(onEditorView = null) {
+  // console.log(Webflow.env("editor"));
+  if (Webflow.env("editor") !== undefined) {
+    if (onEditorView !== null) onEditorView();
+    console.log("Webflow Editor View");
+    return true;
+  } else {
+    return false;
+  }
+}
+
 export class Scroll extends Lenis {
   constructor() {
     super({
@@ -44,6 +55,8 @@ export class Scroll extends Lenis {
       this.percent = progress || 0;
 
       this.callbackRaf();
+
+      handleEditor(this.destroy.bind(this));
     });
   }
 
